@@ -60,7 +60,7 @@ int cmd_execute(Args args,config *cfg){
     else if(cmd0=="exit"||cmd0=="quit"){
        return cmd_exit(); 
     }
-    else  outer_cmd_excute(args,cfg);
+    else  return outer_cmd_excute(args,cfg);
 
     
 }
