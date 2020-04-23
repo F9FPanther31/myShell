@@ -3,18 +3,18 @@ A shell homework of operating systems
 Simple shell that mimics the native shell of Linux
 
 # Function
-- [x]Display user name, host name, working path
-    +Replace home path(/home/user) with "~"
-- [x]Internal command
-    +cd
-    +dir
-    +clear/clr
-    +env/envrion
-    +echo
-    +help
-    +pause
-    +exit/quit
-    +env:shell
+- [x] Display user name, host name, working path
+    + Replace home path(/home/user) with "~"
+- [x] Internal command
+    + cd
+    + dir
+    + clear/clr
+    + env/envrion
+    + echo
+    + help
+    + pause
+    + exit/quit
+    + env:shell
 - [ ] Outer program
     - [x] Invoke
     - [ ] Judgement 
