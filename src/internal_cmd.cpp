@@ -66,7 +66,7 @@ int cmd_echo(Args args,config *cfg){
     return CMD_EXIT_SUCCESS; 
 }
 int cmd_help(){
-    ifstream file("res/text.txt");
+    ifstream file("res/UserManual.txt");
     string text;
     while(!file.eof()){
         getline(file,text);
