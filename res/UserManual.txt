@@ -4,12 +4,12 @@ commond lits:
 
 cd <directory> : change work directory
 dir <directory>  : list files and directories
-clear : clear the terminal
-envrion : list all environment variable
+clr/clear : clear the terminal
+envrion/env : list all environment variable
 echo <word> : print words into terminal
 pause : pause untill press enter
 help : dispaly the help
- exit : exit myshell
+quit/exit : exit myshell
 
 <command> & : execute in background
 
