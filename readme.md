@@ -1,8 +1,8 @@
-#myshell
+# myshell
 A shell homework of operating systems
 Simple shell that mimics the native shell of Linux
 
-#Function
+# Function
 - [x]Display user name, host name, working path
     +Replace home path(/home/user) with "~"
 - [x]Internal command
