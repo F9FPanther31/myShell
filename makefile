@@ -1,18 +1,21 @@
-.PHONY:all
-CC=g++
+
+CC=g++ 
 TARGET=myshell
-DIRS=../src
-SRCS = $(foreach DIR,$(DIRS),$(wildcard $(DIR)/*.cpp))
-OBJS=$(SRCS:%.cpp=%.o)
+DIRS=src
+SRCS = $(wildcard $(DIRS)/*.cpp)
+OBJS+=$(SRCS:%.cpp=%.o)
 
-$(TARGET) : $(OBJS)
-	$(CC) $^ -o $@ -g
+$(TARGET): $(OBJS)
+	$(CC) $^ -o $(TARGET) -g
 
-%.o:%.cpp 
-	$(CC) -c $< -o $@ -g
+../%.o: $(DIRS)/%.cpp 
+	$(CC) -c $^ -o $@ -g
+
+.PHONY:
+run: 
+	clean $(TARGET)
+	./$(TARGET)
 
 .PHONY:
 clean:
-	rm -f $(OBJS)
-
-
+	rm -f $(DIRS)/*.o 
