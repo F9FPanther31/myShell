@@ -1,11 +1,10 @@
 #include"internal_cmd.h"
 
 Args split_cmd(string cmd);
-int cmd_execute(Args args ,config *cfg);
-int outer_cmd_excute(Args args ,config *cfg);
+int extrnal_cmd_excute(Args args ,config *cfg);
 int background_excute(Args args ,config *cfg);
 
-int cmd_execute(string cmd,config *cfg){
+int cmd_analysis(string cmd,config *cfg){
     Args args = split_cmd(cmd);
     int signal;
     if(args.size()==0)return EXCUTE_SUCCESS;
@@ -15,6 +14,8 @@ int cmd_execute(string cmd,config *cfg){
     else
         signal=cmd_execute(args,cfg);
 
+    Args().swap(args);
+    
     return signal;
 }
 
@@ -36,6 +37,7 @@ Args split_cmd(string cmd){
 int cmd_execute(Args args,config *cfg){
     string cmd0=args[0];
     
+    //command is interal command
     if(cmd0=="cd"){
         return cmd_cd(args,cfg);
     }
@@ -60,12 +62,13 @@ int cmd_execute(Args args,config *cfg){
     else if(cmd0=="exit"||cmd0=="quit"){
        return cmd_exit(); 
     }
-    else  return outer_cmd_excute(args,cfg);
+    //cannot find in internal command,go to extrnal command
+    else return extrnal_cmd_excute(args,cfg);
 
     
 }
 
-int outer_cmd_excute(Args args ,config *cfg){
+int extrnal_cmd_excute(Args args ,config *cfg){
     char** arg_list = Args_to_arglist(args);
     
     /*  test for arg_list
@@ -76,9 +79,12 @@ int outer_cmd_excute(Args args ,config *cfg){
     }
     */
 
+   //creat child process
    pid_t pid;
    pid=fork();
    if(pid>0){
+       //parent
+       //wait for child exit
        int stat;
        waitpid(pid,&stat,0);
        return WEXITSTATUS(stat);
@@ -88,10 +94,12 @@ int outer_cmd_excute(Args args ,config *cfg){
        return UNKNOWN_FAILD;
    }
    else{
+    //child
+    //execute extrnal command success,return to parent
        execvp(arg_list[0],arg_list);
-
-       printf("file can not be executed or does not exist.\n");
-       return CMD_CAN_NOT_EXCUTE;
+    //cannot execute command,continue to run
+       printf("Can not find command.\n");
+       return CMD_CAN_NOT_FIND;
    }
    free_arglist(arg_list);
    return CMD_EXIT_SUCCESS;
@@ -101,23 +109,31 @@ int background_excute(Args args ,config *cfg){
     Args bg_args=args;
     bg_args.erase(bg_args.end()-1);
 
+    //creat a daemon
     pid_t pid=fork();
     int i;
+    //ignore signal
     signal(SIGTTOU,SIG_IGN);
 	signal(SIGTTIN,SIG_IGN);
 	signal(SIGTSTP,SIG_IGN);
 	signal(SIGHUP,SIG_IGN);
 
     if(pid>0)
+    //parent
         return CMD_EXIT_SUCCESS;
     else if(pid<0){
+    //child
         printf("Failed to create child process.\n");
         return UNKNOWN_FAILD;
     }
     else{
+        //new session
         setsid();
+        //change directry
         chdir("/");
+        //new mask code
         umask(0);
+        //ignore child signal to exit
         signal(SIGCHLD,SIG_IGN); 
         return cmd_execute(bg_args,cfg);
     }

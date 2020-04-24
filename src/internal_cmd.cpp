@@ -1,12 +1,14 @@
 #include"internal_cmd.h"
 
 int cmd_cd(Args args,config *cfg){
+    //cd without parameter,set working path = home
     if(args.size()==1){
         string home=get_home(cfg);
         chdir(home.c_str());
-    } 
+    }
+    //parameters > 1,first parameter as path 
     else
-    {
+    {   //invalid path,keep working path
         if(chdir(args[1].c_str())==-1){
             cout<<"bash: "<<args[0]<<": "<<
             args[1]<<": Can not find file or dir"<<endl;
@@ -23,12 +25,13 @@ int cmd_clr(Args args,config *cfg){
 int cmd_dir(Args args,config *cfg){
     DIR *dir=NULL;
     struct dirent *dirt=NULL;
-
+    //parameters > 1,show files each path in turn
     if (args.size()>1)
     {
         for(int i=1;i<args.size();i++){
             if(dir=opendir(args[i].c_str())){
                 while((dirt=readdir(dir))!=NULL){
+                    //ignore parent directry and current directry
                     if (strcmp(dirt->d_name, ".") != 0 &&strcmp(dirt->d_name, "..") != 0)
                         cout<<dirt->d_name<<' ';
                 }
@@ -37,9 +40,10 @@ int cmd_dir(Args args,config *cfg){
             }
             else 
                 cout<<args[0]<<": Can not visit'"<<
-                args[i]<<"': Can not find file or dir"<<endl;
+                args[i]<<"': Can not find dir"<<endl;
         }
     }
+    //without parameter,show file with wroking path
     else {
         dir=opendir(getcwd(NULL,0));
         while((dirt=readdir(dir))!=NULL){
@@ -86,6 +90,7 @@ int cmd_pause(){
 int cmd_exit(){
     
     pid_t pid=getpid();
+    //kill process and send termination signal
     if(kill(pid,SIGTERM)==-1);
         return UNKNOWN_FAILD;
     return SIGNAL_EIXT;

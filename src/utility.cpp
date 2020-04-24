@@ -8,6 +8,8 @@
 
 int print_prompt (config *config){
     string cwd=getcwd(NULL,0);
+
+    //repalce /home/user with ~
     string home=get_home(config);
     int start=cwd.find(home);
     cwd.replace(start,home.size(),"~");
@@ -18,11 +20,8 @@ int print_prompt (config *config){
     WHITE<<"$ ";
 }
 
-string get_home(config *cfg){
-    string home="/home/";
-    return home.append(cfg->user->pw_name);
-}
 
+//vector<string> to char* []
 char ** Args_to_arglist(Args args){
     char **arg_list=new char*[args.size()+1];
     int i;
@@ -34,6 +33,7 @@ char ** Args_to_arglist(Args args){
     return arg_list;
 }
 
+//free char*[]
 void free_arglist(char** list){
     int i=0;
     while (list[i])

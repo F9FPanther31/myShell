@@ -47,7 +47,7 @@ typedef vector<string> Args;
 int load_config(config *config);
 string get_home(config *cfg);
 int print_prompt(config *config);
-int cmd_execute(string cmd,config* cfg);
+int cmd_analysis(string cmd,config* cfg);
 int cmd_execute(Args args ,config *cfg);
 char ** Args_to_arglist(Args args);
 void free_arglist(char** list);

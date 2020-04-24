@@ -35,5 +35,5 @@ int loop(config *cfg){
     print_prompt(cfg);
     string cmd;
     getline(cin,cmd);
-    return cmd_execute(cmd,cfg);
+    return cmd_analysis(cmd,cfg);
 }
