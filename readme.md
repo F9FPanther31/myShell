@@ -16,7 +16,8 @@ Simple shell that mimics the native shell of Linux
     + pause
     + exit/quit
     + env:shell
-- [ ] Outer program
+- [x] External parameters support
+- [ ] External command
     - [x] Invoke
     - [ ] Judgement 
 - [x] Background execute
