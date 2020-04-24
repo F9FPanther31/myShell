@@ -17,12 +17,10 @@ Simple shell that mimics the native shell of Linux
     + exit/quit
     + env:shell
 - [x] External parameters support
-- [ ] External command
-    - [x] Invoke
-    - [ ] Judgement 
+- [x] External command
+- [ ] Judge whether the command exists 
 - [x] Background execute
     + creat a daemon
-- [ ] Judge whether the command exists 
 - [ ] IO redirection
 - [ ] Execute batchfile
 - [ ] Pipe
