@@ -9,7 +9,8 @@ int cmd_cd(Args args,config *cfg){
     {
         if(chdir(args[1].c_str())==-1){
             cout<<"bash: "<<args[0]<<": "<<
-            args[1]<<": Can not find file or dir"<<endl;       
+            args[1]<<": Can not find file or dir"<<endl;
+            chdir(getcwd(NULL,0));       
         }
     }
     return CMD_EXIT_SUCCESS;
