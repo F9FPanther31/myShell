@@ -20,7 +20,7 @@ Simple shell that mimics the native shell of Linux
     - [x] Invoke
     - [ ] Judgement 
 - [x] Background execute
-    +creat a daemon
+    + creat a daemon
 - [ ] Judge whether the command exists 
 - [ ] IO redirection
 - [ ] Execute batchfile
