@@ -18,11 +18,11 @@ Simple shell that mimics the native shell of Linux
     + env:shell
 - [x] External parameters support
 - [x] External command
+- [x] Execute batchfile
 - [ ] Judge whether the command exists 
 - [x] Background execute
     + creat a daemon
 - [x] IO redirection
-- [x] Execute batchfile
 - [ ] Pipe
 - [ ] Keyboard monitor
 - [ ] Signal capture and processing
