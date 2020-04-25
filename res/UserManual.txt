@@ -16,4 +16,5 @@ quit/exit : exit myshell
 <directory of program>  <args list> : execute outernal program
 
 <command> > <file> : redirect stdout to file
+<command> >> <file> : redirect stdout to the end of file
 <command> < <file> : redirect stdin from file
