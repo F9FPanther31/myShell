@@ -21,8 +21,8 @@ Simple shell that mimics the native shell of Linux
 - [ ] Judge whether the command exists 
 - [x] Background execute
     + creat a daemon
-- [ ] IO redirection
-- [ ] Execute batchfile
+- [x] IO redirection
+- [x] Execute batchfile
 - [ ] Pipe
 - [ ] Keyboard monitor
 - [ ] Signal capture and processing
