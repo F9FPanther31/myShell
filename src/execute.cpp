@@ -1,7 +1,7 @@
 #include"internal_cmd.h"
 
 Args split_cmd(string cmd);
-int extrnal_cmd_excute(Args args ,config *cfg);
+int external_cmd_excute(Args args ,config *cfg);
 int background_excute(Args args ,config *cfg);
 
 int cmd_analysis(string cmd,config *cfg){
@@ -12,7 +12,7 @@ int cmd_analysis(string cmd,config *cfg){
     if(args[args.size()-1]=="&")
         signal=background_excute(args,cfg);
     else
-        signal=cmd_execute(args,cfg);
+        signal=redirection(args,cfg);
 
     Args().swap(args);
     
@@ -34,7 +34,9 @@ Args split_cmd(string cmd){
     return args;
 }
 
+
 int cmd_execute(Args args,config *cfg){
+
     string cmd0=args[0];
     
     //command is interal command
@@ -63,12 +65,12 @@ int cmd_execute(Args args,config *cfg){
        return cmd_exit(); 
     }
     //cannot find in internal command,go to extrnal command
-    else return extrnal_cmd_excute(args,cfg);
+    else return external_cmd_excute(args,cfg);
 
     
 }
 
-int extrnal_cmd_excute(Args args ,config *cfg){
+int external_cmd_excute(Args args ,config *cfg){
     char** arg_list = Args_to_arglist(args);
     
     /*  test for arg_list
@@ -135,7 +137,7 @@ int background_excute(Args args ,config *cfg){
         umask(0);
         //ignore child signal to exit
         signal(SIGCHLD,SIG_IGN); 
-        return cmd_execute(bg_args,cfg);
+        return redirection(bg_args,cfg);
     }
 }
 /* isspace for testing
