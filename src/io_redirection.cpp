@@ -11,24 +11,37 @@ int redirection(Args args,config *cfg){
     streambuf *re_in=cin.rdbuf(),*re_out=cout.rdbuf();
     for(int i=0;i<range;i++){
        if(args[i]=="<"){
+            //a redirection symbol is next to another
+           if(i-in_pos==1||i-out_pos==1){
+                printf("bash: unexpected syntax Error near redirection symbol\n");
+                return CMD_CAN_NOT_EXCUTE;
+           }
            in_pos=i;
         }
        else if(args[i]==">"||args[i]==">>"){
+            if(i-in_pos==1||i-out_pos==1){
+                printf("bash: unexpected syntax Error near redirection symbol\n");
+                return CMD_CAN_NOT_EXCUTE;
+           }
            out_pos=i;
         }
         if(args[i][0]=='<'&&args[i].size()>1){
+            if(i-in_pos==1||i-out_pos==1){
+                printf("bash: unexpected syntax Error near redirection symbol\n");
+                return CMD_CAN_NOT_EXCUTE;
+           }
             in_pos_co=i;
         }
         else if(args[i][0]=='>'&&args[i].size()>1){
+            if(i-in_pos==1||i-out_pos==1){
+                printf("bash: unexpected syntax Error near redirection symbol\n");
+                return CMD_CAN_NOT_EXCUTE;
+           }
             if(args[i].size()==2&&args[i][1]=='>');
             else out_pos_co=i;
         }
    }
-   //a redirection symbol is next to another
-   if(in_pos-out_pos==1||in_pos-out_pos==-1||in_pos_co-in_pos==1||out_pos_co-in_pos==1||in_pos_co-out_pos==1||out_pos_co-out_pos==1){
-        printf("bash: unexpected syntax Error near redirection symbol\n");
-        return CMD_CAN_NOT_EXCUTE;
-    }
+ 
     //Behind the redirection symbol is empty
    if(in_pos+1==range||out_pos+1==range){
         printf("bash: unexpected syntax Error near symbol 'newline'\n");

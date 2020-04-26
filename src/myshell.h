@@ -47,8 +47,9 @@ typedef vector<string> Args;
 int load_config(config *config);
 string get_home(config *cfg);
 int print_prompt(config *config);
+Args split_cmd(string cmd);
 
-int cmd_analysis(string cmd,config* cfg);
+int cmd_analysis(Args args,config* cfg);
 int cmd_execute(Args args ,config *cfg);
 int redirection(Args args,config *cfg);
 

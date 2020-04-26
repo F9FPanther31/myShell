@@ -1,11 +1,11 @@
 #include"internal_cmd.h"
 
-Args split_cmd(string cmd);
+
 int external_cmd_excute(Args args ,config *cfg);
 int background_excute(Args args ,config *cfg);
 
-int cmd_analysis(string cmd,config *cfg){
-    Args args = split_cmd(cmd);
+int cmd_analysis(Args args,config *cfg){
+    
     int signal;
     if(args.size()==0)return EXCUTE_SUCCESS;
 

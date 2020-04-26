@@ -20,20 +20,18 @@ int main (int argc,char const * argv[]){
         for(int i=1;i<argc;i++)
             args.push_back(argv[i]);
 
-        cmd_execute(args,cfg);
+        int signal=cmd_analysis(args,cfg);
         Args().swap(args);
     }
     while(1){
-        int signal=loop(cfg);
+        print_prompt(cfg);
+        string cmd;
+        getline(cin,cmd);
+        Args args = split_cmd(cmd);
+        int signal=cmd_analysis(args,cfg);
         if(signal==SIGNAL_EIXT)break;
     }
     delete cfg;
     return 0;
 }
 
-int loop(config *cfg){
-    print_prompt(cfg);
-    string cmd;
-    getline(cin,cmd);
-    return cmd_analysis(cmd,cfg);
-}
