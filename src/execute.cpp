@@ -7,7 +7,7 @@ int background_excute(Args args ,config *cfg);
 int cmd_analysis(Args args,config *cfg){
     
     int signal;
-    if(args.size()==0)return EXCUTE_SUCCESS;
+    if(args.size()==0)return SUCCESS;
 
     if(args[args.size()-1]=="&")
         signal=background_excute(args,cfg);
@@ -98,6 +98,8 @@ int external_cmd_excute(Args args ,config *cfg){
    else{
     //child
     //execute extrnal command success,return to parent
+       signal(SIGINT, SIG_DFL);
+	   signal(SIGQUIT, SIG_DFL);
        execvp(arg_list[0],arg_list);
     //cannot execute command,continue to run
        printf("Can not find command.\n");
@@ -108,36 +110,47 @@ int external_cmd_excute(Args args ,config *cfg){
 }
 
 int background_excute(Args args ,config *cfg){
+    extern int count;
+    count++;
+
     Args bg_args=args;
     bg_args.erase(bg_args.end()-1);
-
+    
     //creat a daemon
     pid_t pid=fork();
-    int i;
+    
     //ignore signal
     signal(SIGTTOU,SIG_IGN);
 	signal(SIGTTIN,SIG_IGN);
 	signal(SIGTSTP,SIG_IGN);
 	signal(SIGHUP,SIG_IGN);
 
-    if(pid>0)
+    if(pid>0){
     //parent
+        usleep(100);
         return CMD_EXIT_SUCCESS;
+    }
     else if(pid<0){
-    //child
+    
         printf("Failed to create child process.\n");
         return UNKNOWN_FAILD;
     }
     else{
+        //child
         //new session
         setsid();
         //change directry
-        chdir("/");
+        
+        chdir(getcwd(NULL,0));
         //new mask code
         umask(0);
         //ignore child signal to exit
-        signal(SIGCHLD,SIG_IGN); 
-        return redirection(bg_args,cfg);
+        signal(SIGCHLD,SIG_IGN);
+
+        cout<<"["<<count<<"] "<<getpid()<<endl;
+         
+        int stat= redirection(bg_args,cfg);
+        return BACK_GROUND;
     }
 }
 /* isspace for testing
