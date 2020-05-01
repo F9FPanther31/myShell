@@ -3,6 +3,7 @@
 #define UNKNOWN_FAILD 1
 #define CMD_INTERNAL 4
 #define CMD_OUTERNAL 5
+#define BACK_GROUND 8
 #define CMD_CAN_NOT_EXCUTE 126
 #define CMD_CAN_NOT_FIND 127
 #define SIGNAL_EIXT 128
