@@ -2,13 +2,13 @@
 #define CMD_EXIT_SUCCESS 0
 #define UNKNOWN_FAILD 1
 #define CMD_INTERNAL 4
-#define CMD_OUTERNAL 5
+#define CMD_EXTERNAL 5
 #define BACK_GROUND 8
 #define CMD_CAN_NOT_EXCUTE 126
 #define CMD_CAN_NOT_FIND 127
 #define SIGNAL_EIXT 128
 #define EXCUTE_FAILD 129
-#define EXCUTE_SUCCESS 255
+#define SUCCESS 255
 
 #include<unistd.h>
 #include<sys/wait.h>
