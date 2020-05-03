@@ -12,12 +12,19 @@ int print_prompt (config *config){
     //repalce /home/user with ~
     string home=get_home(config);
     int start=cwd.find(home);
-    cwd.replace(start,home.size(),"~");
+    if(strcmp(config->user->pw_name,"root")==0)
 
-    cout<<GREEN<<config->user->pw_name<<
-    '@'<<config->host_name<<
-    WHITE<<":"<<BLUE<<cwd<<
-    WHITE<<"$ ";
+        cout<<config->user->pw_name<<
+        '@'<<config->host_name<<":"<<cwd<<"$ ";
+    
+    else{
+        cwd.replace(start,home.size(),"~");
+
+        cout<<GREEN<<config->user->pw_name<<
+        '@'<<config->host_name<<
+        WHITE<<":"<<BLUE<<cwd<<
+        WHITE<<"$ ";
+    }
 }
 
 

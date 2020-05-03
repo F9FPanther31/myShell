@@ -3,8 +3,11 @@
 int cmd_cd(Args args,config *cfg){
     //cd without parameter,set working path = home
     if(args.size()==1){
-        string home=get_home(cfg);
-        chdir(home.c_str());
+        if(strcmp(cfg->user->pw_name,"root")!=0){
+            string home=get_home(cfg);
+            chdir(home.c_str());
+        }
+        else chdir("/");
     }
     //parameters > 1,first parameter as path 
     else
